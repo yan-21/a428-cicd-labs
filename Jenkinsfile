@@ -1,10 +1,7 @@
 node {
-    docker.image('node:16-buster-slim').withRun('-p 3000:3000') {
-        stage('Build') {
+    stage('Build and Test') {
+        docker.image('node:16-buster-slim').inside("-p 3000:3000") {
             sh 'npm install'
-        }
-        
-        stage('Test') {
             sh './jenkins/scripts/test.sh'
         }
     }
